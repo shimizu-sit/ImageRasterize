@@ -87,7 +87,108 @@ void draw() {
 }
 ```
 
+## Creatig the loop
 
+素晴らしい！！必要な値はすべて適切な変数に格納されています．では，ループを作りましょう．
+
+最初にY軸のループをつくります．なぜなら，二次元のものを一列ずつではなく，一行ずつ見ていく方が直観的にわかるからです．
+
+```Processing
+  for (int y = 0; y < img.height; y  += tileSize) {
+    for (int x = 0; x < img.width; x += tileSize) {
+    }
+  }
+```
+
+ループの中では，まず現在のピクセルから色を抽出し，color型の変数 `c` に代入します．
+
+```Processing
+  for (int y = 0; y < img.height; y  += tileSize) {
+    for (int x = 0; x < img.width; x += tileSize) {
+      color c = img.get(x, y);
+    }
+  }
+```
+
+ここで， `c` の明るさを計算して `float b` に入れ， `0` から `255` までの値を `0` から `1` までの範囲にマッピングします．
+
+```Processing
+  for (int y = 0; y < img.height; y  += tileSize) {
+    for (int x = 0; x < img.width; x += tileSize) {
+      color c = img.get(x, y);
+      float b = map(brightness(c), 0, 255, 1, 0);
+    }
+  }
+```
+
+そして最後に，新しい行列を作り，適切な大きさの矩形を描きます．
+
+```Processing
+      // Open a new matrix
+      pushMatrix();
+      // set the position
+      translate(x, y);
+      // Draw the tile
+      rect(0, 0, b * tileSize, b * tileSize);
+      // close matrix
+      popMatrix();
+```
+
+後は，ネストした `for` を閉じて， `draw()` も閉じて終了です．
+
+最終敵にできたプログラムです．
+
+```Processing
+color FG = #111111;
+color BG = #f1f1f1;
+
+PImage img;
+
+void setup() {
+  size(500, 700);
+  background(BG);
+  img = loadImage("woman.jpg");
+  img.resize(500, 700);
+}
+
+void draw() {
+  background(BG);
+  fill(FG);
+  noStroke();
+  float ratio = float(height)/float(width);
+  float tilesX = map(mouseX, 0, width, 10, 100);
+  float tilesY = ratio * tilesX;
+  float tileSize = width / tilesX;
+  
+  for (int y = 0; y < img.height; y  += tileSize) {
+    for (int x = 0; x < img.width; x += tileSize) {
+      color c = img.get(x, y);
+      float b = map(brightness(c), 0, 255, 1, 0);
+      
+      // open a new matrix
+      pushMatrix();
+      // set the position
+      translate(x, y);
+      // Draw the tile
+      rect(0, 0, b * tileSize, b * tileSize);
+      // close matrix
+      popMatrix();
+    }
+  } 
+}
+```
+
+`tileX` の値を `10` , `20` , `30` , `50` , `100` と変化させた画像を順番に表示します．
+
+![raster-10](../ImageRasterize/raster-10.png)
+
+![raster-20](../ImageRasterize/raster-20.png)
+
+![raster-30](../ImageRasterize/raster-30.png)
+
+![raster-50](../ImageRasterize/raster-50.png)
+
+![raster-100](../ImageRasterize/raster-100.png)
 
 
 [^1]: Processingで画像を扱うには，https://yoppa.org/proga10/1353.html を参考にしてください．
