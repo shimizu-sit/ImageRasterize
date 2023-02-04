@@ -191,6 +191,14 @@ void draw() {
 ![raster-100](../ImageRasterize/raster-100.png)
 
 
+これでおしまいです．そんなに難しくはないでしょう．ここに，さらなる読み物とインスピレーションを得るための興味深いリンクがいくつかあります．
+
+- http://generateme.tumblr.com/
+- https://github.com/tsulej/GenerateMe
+- https://timrodenbroeker.de/projects/redrawing-images
+
+[timrodenbroeker/tutorials: All assets for my tutorials](https://github.com/timrodenbroeker/tutorials)
+
 [^1]: Processingで画像を扱うには，https://yoppa.org/proga10/1353.html を参考にしてください．
 
 [^2]: `resize()` 関数については，https://processing.org/reference/PImage_resize_.html を参考にしてください．
